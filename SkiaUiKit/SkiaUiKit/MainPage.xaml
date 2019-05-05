@@ -5,10 +5,10 @@
              x:Class="SkiaUiKit.MainPage">
 
     <Grid Padding="20">
-        <local:CardView Gradient="Linear" BackgroundColor="Red" SecondaryColor="Blue" Padding="20" Elevation="0">
-            <StackLayout>
-                <Label Text="Test" />
-            </StackLayout>
+        <local:CardView GradientStyle="CornerToCorner" PrimaryColor="Red" SecondaryColor="Blue">
+            <Grid>
+                <local:Label Text="GRADIENT" IsFitToScale="True" GradientStyle="CornerToCorner" PrimaryColor="#404040" SecondaryColor="#C0C0C0" />
+            </Grid>
         </local:CardView>
     </Grid>
 

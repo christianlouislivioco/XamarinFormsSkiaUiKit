@@ -5,7 +5,7 @@ using Xamarin.Forms;
 namespace SkiaUiKit.CustomControls
 {
     [ContentProperty("MainContent")]
-    public class CardView : ContentView
+    public class CardView : Gradient
     {
         private ContentView _mainContent;
         private float _shadowArea;
@@ -62,24 +62,6 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(CornerRadiusProperty, value);
         }
 
-        public new static readonly BindableProperty BackgroundColorProperty
-            = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(CardView), Color.WhiteSmoke);
-
-        public new Color BackgroundColor
-        {
-            get => (Color)GetValue(BackgroundColorProperty);
-            set => SetValue(BackgroundColorProperty, value);
-        }
-
-        public static readonly BindableProperty SecondaryColorProperty
-            = BindableProperty.Create(nameof(SecondaryColor), typeof(Color), typeof(CardView));
-
-        public Color SecondaryColor
-        {
-            get => (Color)GetValue(SecondaryColorProperty);
-            set => SetValue(SecondaryColorProperty, value);
-        }
-
         public static readonly BindableProperty ShadowColorProperty
             = BindableProperty.Create(nameof(ShadowColor), typeof(SKColor), typeof(CardView), new SKColor(0, 0, 0, 102));
 
@@ -96,15 +78,6 @@ namespace SkiaUiKit.CustomControls
         {
             get => (Thickness)GetValue(PaddingProperty);
             set => SetValue(PaddingProperty, value);
-        }
-
-        public static readonly BindableProperty GradientProperty
-           = BindableProperty.Create(nameof(GradientType), typeof(GradientType), typeof(CardView));
-
-        public GradientType Gradient
-        {
-            get => (GradientType)GetValue(GradientProperty);
-            set => SetValue(GradientProperty, value);
         }
 
         private void CanvasView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -126,37 +99,15 @@ namespace SkiaUiKit.CustomControls
 
             var bgPaint = new SKPaint
             {
-                Shader = GetGradient(Gradient, innerRect),
+                Shader = GetGradient(GradientStyle, innerRect),
                 Style = SKPaintStyle.Fill,
-                Color = this.BackgroundColor.ToSKColor(),
+                Color = this.PrimaryColor.ToSKColor(),
                 BlendMode = SKBlendMode.SrcOver,
                 IsAntialias = true,
                 ImageFilter = shadow
             };
 
             canvas.DrawRoundRect(baseRect, bgPaint);
-        }
-
-        private SKShader GetGradient(GradientType gradientType, SKRect rect)
-        {
-            switch (gradientType)
-            {
-                case GradientType.Linear:
-                    return SKShader.CreateLinearGradient(
-                                 new SKPoint(rect.Left, rect.Top),
-                                 new SKPoint(rect.Right, rect.Bottom),
-                                 new SKColor[] { this.BackgroundColor.ToSKColor(), this.SecondaryColor.ToSKColor() },
-                                 new float[] { 0, 1 },
-                                 SKShaderTileMode.Repeat);
-                default:
-                    return null;
-            }
-        }
-
-        public enum GradientType
-        {
-            None,
-            Linear
         }
     }
 }
