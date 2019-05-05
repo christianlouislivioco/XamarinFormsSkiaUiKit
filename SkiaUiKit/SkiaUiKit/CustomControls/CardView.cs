@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using SkiaSharp;
+﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 
