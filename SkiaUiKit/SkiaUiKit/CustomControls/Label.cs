@@ -31,6 +31,15 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(IsFitToScaleProperty, value);
         }
 
+        public static readonly BindableProperty FontSizeProperty
+            = BindableProperty.Create(nameof(FontSize), typeof(float), typeof(Label), 14f);
+
+        public float FontSize
+        {
+            get => (float)GetValue(FontSizeProperty);
+            set => SetValue(FontSizeProperty, value);
+        }
+
 
         private void CanvasView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
@@ -42,12 +51,12 @@ namespace SkiaUiKit.CustomControls
 
             using (SKPaint paint = new SKPaint())
             {
-                paint.TextSize = 14;
+                paint.TextSize = this.FontSize;
 
                 if (this.IsFitToScale)
                 {
                     float width = paint.MeasureText(this.Text);
-                    float scale = 0.9f * info.Width / width;
+                    float scale = 1f * info.Width / width;
                     paint.TextSize *= scale;
                 }
    
