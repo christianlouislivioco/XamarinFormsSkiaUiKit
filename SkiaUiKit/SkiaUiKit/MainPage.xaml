@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SkiaUiKit.CustomControls"
+             x:Class="SkiaUiKit.MainPage">
+
+    <Grid Padding="20">
+        <local:CardView Gradient="Linear" BackgroundColor="Red" SecondaryColor="Blue" Padding="20" Elevation="0">
+            <StackLayout>
+                <Label Text="Test" />
+            </StackLayout>
+        </local:CardView>
+    </Grid>
+
+</ContentPage>
