@@ -1,5 +1,6 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
 namespace SkiaUiKit.CustomControls
@@ -108,6 +109,16 @@ namespace SkiaUiKit.CustomControls
             };
 
             canvas.DrawRoundRect(baseRect, bgPaint);
+        }
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+
+            if (propertyName == nameof(this.Elevation))
+            {
+                HandleShadowArea();
+            }
         }
     }
 }
