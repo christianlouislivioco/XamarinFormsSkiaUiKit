@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:SkiaUiKit.CustomControls"
-             x:Class="SkiaUiKit.MainPage">
+<ContentPage x:Class="SkiaUiKit.MainPage" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:SkiaUiKit.CustomControls">
 
     <Grid Padding="20">
         <local:CardView GradientStyle="CornerToCorner" PrimaryColor="Red" SecondaryColor="Blue">
             <Grid>
-                <local:Label Text="GRADIENT" IsFitToScale="True" GradientStyle="CornerToCorner" PrimaryColor="#404040" SecondaryColor="#C0C0C0" />
+                <local:Button />
+                <!--<local:Label FontSize="14"
+                             GradientStyle="CornerToCorner"
+                             PrimaryColor="#404040"
+                             SecondaryColor="#C0C0C0"
+                             Text="GRADIENT" />-->
             </Grid>
         </local:CardView>
     </Grid>
