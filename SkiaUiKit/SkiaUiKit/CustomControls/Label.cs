@@ -79,9 +79,6 @@ namespace SkiaUiKit.CustomControls
                     var width = paint.MeasureText(this.Text);
                     var scale = 1f * _info.Width / width;
                     paint.TextSize *= scale;
-
-                    this.HorizontalTextAlignment = TextAlignment.Center;
-                    this.VerticalTextAlignment = TextAlignment.Center;
                 }
 
                 _textBounds = new SKRect();
@@ -122,7 +119,7 @@ namespace SkiaUiKit.CustomControls
                 case TextAlignment.End:
                     return _info.Height - _textBounds.Height;
                 default:
-                    return 0;
+                    return _textBounds.Height;
             }
         }
     }
