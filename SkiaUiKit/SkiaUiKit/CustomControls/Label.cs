@@ -6,6 +6,9 @@ namespace SkiaUiKit.CustomControls
 {
     public class Label : Gradient
     {
+        private SKImageInfo _info;
+        private SKRect _textBounds;
+
         public Label()
         {
             var canvasView = new SKCanvasView();
@@ -40,39 +43,86 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(FontSizeProperty, value);
         }
 
+        public static readonly BindableProperty HorizontalTextAlignmentProperty
+            = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(Label), TextAlignment.Start);
+
+        public TextAlignment HorizontalTextAlignment
+        {
+            get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty);
+            set => SetValue(HorizontalTextAlignmentProperty, value);
+        }
+
+        public static readonly BindableProperty VerticalTextAlignmentProperty
+          = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(Label), TextAlignment.Start);
+
+        public TextAlignment VerticalTextAlignment
+        {
+            get => (TextAlignment)GetValue(VerticalTextAlignmentProperty);
+            set => SetValue(VerticalTextAlignmentProperty, value);
+        }
 
         private void CanvasView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
-            var info = e.Info;
+            _info = e.Info;
             var surface = e.Surface;
             var canvas = surface.Canvas;
 
             canvas.Clear();
 
-            using (SKPaint paint = new SKPaint())
+            using (var paint = new SKPaint())
             {
+                paint.IsAntialias = true;
                 paint.TextSize = this.FontSize;
 
                 if (this.IsFitToScale)
                 {
-                    float width = paint.MeasureText(this.Text);
-                    float scale = 1f * info.Width / width;
+                    var width = paint.MeasureText(this.Text);
+                    var scale = 1f * _info.Width / width;
                     paint.TextSize *= scale;
+
+                    this.HorizontalTextAlignment = TextAlignment.Center;
+                    this.VerticalTextAlignment = TextAlignment.Center;
                 }
-   
-                paint.IsAntialias = true;
 
-                var textBounds = new SKRect();
-                paint.MeasureText(this.Text, ref textBounds);
+                _textBounds = new SKRect();
+                paint.MeasureText(this.Text, ref _textBounds);
 
-                float xText = info.Width / 2 - textBounds.MidX;
-                float yText = info.Height / 2 - textBounds.MidY;
+                var xText = GetTextPositionX();
+                var yText = GetTextPositionY();
+                _textBounds.Offset(xText, yText);
 
-                textBounds.Offset(xText, yText);
-
-                paint.Shader = GetGradient(this.GradientStyle, textBounds);
+                paint.Shader = GetGradient(this.GradientStyle, _textBounds);
 
                 canvas.DrawText(this.Text, xText, yText, paint);
+
+                this.WidthRequest = _textBounds.Width;
+                this.HeightRequest = _textBounds.Height;
+            }
+        }
+
+        private float GetTextPositionX()
+        {
+            switch (this.HorizontalTextAlignment)
+            {
+                case TextAlignment.Center:
+                    return _info.Width / 2 - _textBounds.MidX;
+                case TextAlignment.End:
+                    return _info.Width - _textBounds.Width;
+                default:
+                    return 0;
+            }
+        }
+
+        private float GetTextPositionY()
+        {
+            switch (this.VerticalTextAlignment)
+            {
+                case TextAlignment.Center:
+                    return _info.Height / 2 - _textBounds.MidY;
+                case TextAlignment.End:
+                    return _info.Height - _textBounds.Height;
+                default:
+                    return 0;
             }
         }
     }

@@ -7,7 +7,17 @@
     <Grid Padding="20">
         <local:CardView GradientStyle="CornerToCorner" PrimaryColor="Red" SecondaryColor="Blue">
             <Grid>
-                <local:Label Text="GRADIENT" IsFitToScale="True" GradientStyle="CornerToCorner" PrimaryColor="#404040" SecondaryColor="#C0C0C0" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="50*" />
+                </Grid.ColumnDefinitions>
+
+                <local:Label IsFitToScale="True" Text="GRADIENT" GradientStyle="CornerToCorner" PrimaryColor="#404040" SecondaryColor="#C0C0C0" HorizontalTextAlignment="End"  Grid.Row="0" Grid.Column="0"/>
+                <!--<Label Text="GRADIENT" BackgroundColor="Pink" TextColor="Black" Grid.Row="1" Grid.Column="0" FontSize="14" />-->
             </Grid>
         </local:CardView>
     </Grid>
