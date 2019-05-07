@@ -3,7 +3,7 @@
 
     <Grid Padding="20">
         <!--<local:Button BackgroundColor="WhiteSmoke" />-->
-        <local:Test />
+        <local:Ripple />
 
         <!--<local:CardView>
             <Grid>
