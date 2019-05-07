@@ -6,13 +6,13 @@ using Xamarin.Forms;
 namespace SkiaUiKit.CustomControls
 {
     [ContentProperty("MainContent")]
-    public class CardView : Gradient
+    public class Card : Gradient
     {
         private ContentView _mainContent;
         private float _shadowArea;
         private SKCanvasView _dropShadowView;
 
-        public CardView()
+        public Card()
         {
             _mainContent = new ContentView();
             _dropShadowView = new SKCanvasView();
@@ -46,7 +46,7 @@ namespace SkiaUiKit.CustomControls
         }
 
         public static readonly BindableProperty ElevationProperty
-            = BindableProperty.Create(nameof(Elevation), typeof(float), typeof(CardView), 4f);
+            = BindableProperty.Create(nameof(Elevation), typeof(float), typeof(Card), 4f);
 
         public float Elevation
         {
@@ -55,7 +55,7 @@ namespace SkiaUiKit.CustomControls
         }
 
         public static readonly BindableProperty CornerRadiusProperty
-            = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CardView), 20f);
+            = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(Card), 20f);
 
         public float CornerRadius
         {
@@ -64,7 +64,7 @@ namespace SkiaUiKit.CustomControls
         }
 
         public static readonly BindableProperty ShadowColorProperty
-            = BindableProperty.Create(nameof(ShadowColor), typeof(SKColor), typeof(CardView), new SKColor(0, 0, 0, 102));
+            = BindableProperty.Create(nameof(ShadowColor), typeof(SKColor), typeof(Card), new SKColor(0, 0, 0, 102));
 
         public SKColor ShadowColor
         {
@@ -73,7 +73,7 @@ namespace SkiaUiKit.CustomControls
         }
 
         public new static readonly BindableProperty PaddingProperty
-         = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(CardView), new Thickness(20));
+         = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Card), new Thickness(20));
 
         public new Thickness Padding
         {
