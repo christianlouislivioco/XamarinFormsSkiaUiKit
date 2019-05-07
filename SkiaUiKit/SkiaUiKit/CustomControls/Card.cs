@@ -138,9 +138,11 @@ namespace SkiaUiKit.CustomControls
             {
                 if (this.IsClickable)
                 {
+                    _grid = new Grid();
                     _grid.Children.Add(_dropShadowView);
                     _grid.Children.Add(new Ripple());
                     _grid.Children.Add(_mainContent);
+                    this.Content = _grid;
                 }
             }
         }
