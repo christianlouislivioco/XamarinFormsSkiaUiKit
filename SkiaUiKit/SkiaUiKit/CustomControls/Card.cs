@@ -11,6 +11,7 @@ namespace SkiaUiKit.CustomControls
         private ContentView _mainContent;
         private float _shadowArea;
         private SKCanvasView _dropShadowView;
+        private Grid _grid;
 
         public Card()
         {
@@ -19,12 +20,13 @@ namespace SkiaUiKit.CustomControls
             _dropShadowView.PaintSurface += CanvasView_PaintSurface;
 
             HandleShadowArea();
-            _mainContent.Padding = this.Padding;
+            _mainContent.Margin = this.Padding;
 
-            var grid = new Grid();
-            grid.Children.Add(_dropShadowView);
-            grid.Children.Add(_mainContent);
-            this.Content = grid;
+            _grid = new Grid();
+            _grid.Children.Add(_dropShadowView);
+            _grid.Children.Add(_mainContent);
+
+            this.Content = _grid;
         }
 
         private void HandleShadowArea()
@@ -81,6 +83,15 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(PaddingProperty, value);
         }
 
+        public static readonly BindableProperty IsClickableProperty
+          = BindableProperty.Create(nameof(IsClickable), typeof(bool), typeof(Card), false);
+
+        public bool IsClickable
+        {
+            get => (bool)GetValue(IsClickableProperty);
+            set => SetValue(IsClickableProperty, value);
+        }
+
         private void CanvasView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
             var canvas = e.Surface.Canvas;
@@ -118,6 +129,19 @@ namespace SkiaUiKit.CustomControls
             if (propertyName == nameof(this.Elevation))
             {
                 HandleShadowArea();
+            }
+            if (propertyName == nameof(this.Padding))
+            {
+                _mainContent.Margin = this.Padding;
+            }
+            if (propertyName == nameof(this.IsClickable))
+            {
+                if (this.IsClickable)
+                {
+                    _grid.Children.Add(_dropShadowView);
+                    _grid.Children.Add(new Ripple());
+                    _grid.Children.Add(_mainContent);
+                }
             }
         }
     }
