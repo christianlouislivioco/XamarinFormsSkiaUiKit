@@ -2,31 +2,32 @@
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 using System;
+using System.Threading.Tasks;
 
 namespace SkiaUiKit.CustomControls
 {
     public class Ripple : SKCanvasView
     {
-        float _currentRadius;
-        double _colorAlphaPercentage;
-
+        private float _currentRadius;
+        private double _colorAlphaPercentage;
         private float _pressedAreaX;
         private float _pressedAreaY;
-        private Easing _customEasing;
         private SKImageInfo _info;
+
+        private TaskCompletionSource<object> _releasedTask = new TaskCompletionSource<object>();
 
         public Ripple()
         {
             this.EnableTouchEvents = true;
         }
 
-        public static readonly BindableProperty ElevationProperty
-            = BindableProperty.Create(nameof(Elevation), typeof(float), typeof(CardView), 4f);
+        public static readonly BindableProperty RippleColorProperty
+            = BindableProperty.Create(nameof(RippleColor), typeof(Color), typeof(Ripple), Color.Black);
 
-        public float Elevation
+        public Color RippleColor
         {
-            get => (float)GetValue(ElevationProperty);
-            set => SetValue(ElevationProperty, value);
+            get => (Color)GetValue(RippleColorProperty);
+            set => SetValue(RippleColorProperty, value);
         }
 
         protected override void OnTouch(SKTouchEventArgs e)
@@ -44,14 +45,24 @@ namespace SkiaUiKit.CustomControls
                         _colorAlphaPercentage = _currentRadius / area;
                         this.InvalidateSurface();
                         _currentRadius = (float)s;
-                    }, _currentRadius = (float)(area * 0.04), area), 16, length: 350, easing: Easing.SinOut, finished: (d, b) => 
+                    }, _currentRadius = (float)(area * 0.04), area), 16, length: 350, easing: Easing.SinOut, finished: async (d, b) => 
                     {
+                        await _releasedTask.Task;
+                        _releasedTask = new TaskCompletionSource<object>();
                         this.Animate("FadeAnim", new Animation((s) =>
                         {
                             _colorAlphaPercentage = s;
                             this.InvalidateSurface();
                         }, _colorAlphaPercentage, 0), 16, 350, Easing.SinOut);
                     });
+                    break;
+
+                case SKTouchAction.Released:
+                    if(_releasedTask.Task.Status == TaskStatus.WaitingForActivation)
+                    {
+                        _releasedTask.SetResult(null);
+                    }
+
                     break;
             }
 
@@ -66,7 +77,7 @@ namespace SkiaUiKit.CustomControls
             canvas.Clear();
 
             var touchLocation = new SKPoint(_pressedAreaX, _pressedAreaY);
-            var rippleColor = Color.FromHex("#52000000").MultiplyAlpha(_colorAlphaPercentage).ToSKColor();
+            var rippleColor = RippleColor.MultiplyAlpha(0.32).MultiplyAlpha(_colorAlphaPercentage).ToSKColor();
             var paint = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
