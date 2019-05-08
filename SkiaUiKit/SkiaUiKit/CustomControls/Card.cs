@@ -20,13 +20,7 @@ namespace SkiaUiKit.CustomControls
             _dropShadowView.PaintSurface += CanvasView_PaintSurface;
 
             HandleShadowArea();
-            _mainContent.Margin = this.Padding;
-
-            _grid = new Grid();
-            _grid.Children.Add(_dropShadowView);
-            _grid.Children.Add(_mainContent);
-
-            this.Content = _grid;
+            ReinitializeGrid();
         }
 
         public View MainContent
@@ -35,7 +29,8 @@ namespace SkiaUiKit.CustomControls
             set { _mainContent.Content = value; }
         }
 
-        public static readonly BindableProperty IsClickableProperty = BindableProperty.Create(nameof(IsClickable), typeof(bool), typeof(Card), false);
+        public static readonly BindableProperty IsClickableProperty 
+            = BindableProperty.Create(nameof(IsClickable), typeof(bool), typeof(Card), false);
 
         public bool IsClickable
         {
@@ -43,7 +38,8 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(IsClickableProperty, value);
         }
 
-        public new static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Card), new Thickness(20));
+        public new static readonly BindableProperty PaddingProperty 
+            = BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Card), new Thickness(20));
 
         public new Thickness Padding
         {
@@ -65,14 +61,7 @@ namespace SkiaUiKit.CustomControls
             }
             if (propertyName == nameof(this.IsClickable))
             {
-                if (this.IsClickable)
-                {
-                    _grid = new Grid();
-                    _grid.Children.Add(_dropShadowView);
-                    _grid.Children.Add(new Ripple());
-                    _grid.Children.Add(_mainContent);
-                    this.Content = _grid;
-                }
+                ReinitializeGrid();
             }
         }
 
@@ -93,17 +82,36 @@ namespace SkiaUiKit.CustomControls
             var innerRect = new SKRect(_shadowArea, _shadowArea, info.Width - _shadowArea, info.Height - _shadowArea);
             var baseRect = new SKRoundRect(innerRect, this.CornerRadius, this.CornerRadius);
 
-            var bgPaint = new SKPaint
+            var bgPaint = new SKPaint()
             {
-                Shader = GetGradient(GradientStyle, innerRect),
+                Shader = GetShader(GradientStyle, innerRect),
                 Style = SKPaintStyle.Fill,
-                Color = this.PrimaryColor.ToSKColor(),
+                Color = this.BackgroundColor.ToSKColor(),
                 BlendMode = SKBlendMode.SrcOver,
                 IsAntialias = true,
                 ImageFilter = shadow
             };
 
             canvas.DrawRoundRect(baseRect, bgPaint);
+        }
+
+        private void ReinitializeGrid()
+        {
+            _grid = new Grid();
+            _grid.Children.Add(_dropShadowView);
+
+            if (this.IsClickable)
+            {
+                _grid.Children.Add(new Ripple());
+            }
+
+            if (_mainContent.Content != null)
+            {
+                _mainContent.Margin = this.Padding;
+                _grid.Children.Add(_mainContent);
+            }
+
+            this.Content = _grid;
         }
 
         private void HandleShadowArea()

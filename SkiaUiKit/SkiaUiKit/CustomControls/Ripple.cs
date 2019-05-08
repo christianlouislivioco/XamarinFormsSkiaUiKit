@@ -19,10 +19,13 @@ namespace SkiaUiKit.CustomControls
 
         public Ripple()
         {
-            _canvas = new SKCanvasView();
-            _canvas.EnableTouchEvents = true;
-            _canvas.Touch += this._canvas_Touch;
-            _canvas.PaintSurface += this._canvas_PaintSurface;
+            _canvas = new SKCanvasView
+            {
+                EnableTouchEvents = true
+            };
+
+            _canvas.Touch += _canvas_Touch;
+            _canvas.PaintSurface += _canvas_PaintSurface;
 
             this.Content = _canvas;
         }
@@ -48,7 +51,6 @@ namespace SkiaUiKit.CustomControls
             var baseRect = new SKRoundRect(innerRect, this.CornerRadius, this.CornerRadius);
 
             canvas.ClipRoundRect(baseRect, antialias: true);
-
             canvas.DrawCircle(touchLocation, _currentRadius, paint);
         }
 
@@ -60,7 +62,7 @@ namespace SkiaUiKit.CustomControls
                     _pressedAreaX = e.Location.X;
                     _pressedAreaY = e.Location.Y;
 
-                    var area = Math.Max(_info.Width, _info.Height) * 1.25;
+                    var area = Math.Max(_info.Width, _info.Height) * 1.50;
 
                     this.Animate("ScaleAnim", new Animation((s) =>
                     {
@@ -71,6 +73,7 @@ namespace SkiaUiKit.CustomControls
                     {
                         await _releasedTask.Task;
                         _releasedTask = new TaskCompletionSource<object>();
+
                         this.Animate("FadeAnim", new Animation((s) =>
                         {
                             _colorAlphaPercentage = s;
@@ -78,13 +81,11 @@ namespace SkiaUiKit.CustomControls
                         }, _colorAlphaPercentage, 0), 16, 350, Easing.SinOut);
                     });
                     break;
-
                 case SKTouchAction.Released:
-                    if (_releasedTask.Task.Status == TaskStatus.WaitingForActivation)
+                    if (_releasedTask.Task.Status != TaskStatus.RanToCompletion)
                     {
                         _releasedTask.SetResult(null);
                     }
-
                     break;
             }
 

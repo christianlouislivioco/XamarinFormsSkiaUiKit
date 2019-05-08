@@ -8,23 +8,26 @@ namespace SkiaUiKit
 {
     public class Gradient : Ripple
     {
-        public static readonly BindableProperty GradientProperty = BindableProperty.Create(nameof(Enums.GradientType), typeof(GradientType), typeof(Gradient));
+        public static readonly BindableProperty GradientStyleProperty 
+            = BindableProperty.Create(nameof(Enums.GradientType), typeof(GradientType), typeof(Gradient));
 
         public GradientType GradientStyle
         {
-            get => (GradientType)GetValue(GradientProperty);
-            set => SetValue(GradientProperty, value);
+            get => (GradientType)GetValue(GradientStyleProperty);
+            set => SetValue(GradientStyleProperty, value);
         }
 
-        public static readonly BindableProperty PrimaryColorProperty = BindableProperty.Create(nameof(PrimaryColor), typeof(Color), typeof(Gradient), Color.WhiteSmoke);
+        public static new readonly BindableProperty BackgroundColorProperty 
+            = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Gradient), Color.WhiteSmoke);
 
-        public Color PrimaryColor
+        public new Color BackgroundColor
         {
-            get => (Color)GetValue(PrimaryColorProperty);
-            set => SetValue(PrimaryColorProperty, value);
+            get => (Color)GetValue(BackgroundColorProperty);
+            set => SetValue(BackgroundColorProperty, value);
         }
 
-        public static readonly BindableProperty SecondaryColorProperty = BindableProperty.Create(nameof(SecondaryColor), typeof(Color), typeof(Gradient));
+        public static readonly BindableProperty SecondaryColorProperty 
+            = BindableProperty.Create(nameof(SecondaryColor), typeof(Color), typeof(Gradient));
 
         public Color SecondaryColor
         {
@@ -32,7 +35,7 @@ namespace SkiaUiKit
             set => SetValue(SecondaryColorProperty, value);
         }
 
-        public SKShader GetGradient(
+        public SKShader GetShader(
             GradientType gradientType,
             SKRect rect)
         {
@@ -42,7 +45,7 @@ namespace SkiaUiKit
                     return SKShader.CreateLinearGradient(
                                  new SKPoint(rect.Left, rect.Top),
                                  new SKPoint(rect.Right, rect.Bottom),
-                                 new SKColor[] { this.PrimaryColor.ToSKColor(), this.SecondaryColor.ToSKColor() },
+                                 new SKColor[] { this.BackgroundColor.ToSKColor(), this.SecondaryColor.ToSKColor() },
                                  new float[] { 0, 1 },
                                  SKShaderTileMode.Repeat);
                 default:

@@ -83,7 +83,7 @@ namespace SkiaUiKit.CustomControls
                 var yText = GetTextPositionY();
                 _textBounds.Offset(xText, yText);
 
-                paint.Shader = GetGradient(this.GradientStyle, _textBounds);
+                paint.Shader = GetShader(this.GradientStyle, _textBounds);
 
                 canvas.DrawText(this.Text, xText, yText, paint);
 
