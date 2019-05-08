@@ -3,11 +3,7 @@
 
     <Grid Padding="20">
         <!--<local:Button BackgroundColor="WhiteSmoke" />-->
-        <local:Card Padding="100"
-                    BackgroundColor="Blue"
-                    GradientStyle="CornerToCorner"
-                    IsClickable="True"
-                    PrimaryColor="Red" />
+        <local:Card Padding="100" IsClickable="True" />
 
         <!--<local:CardView>
             <Grid>

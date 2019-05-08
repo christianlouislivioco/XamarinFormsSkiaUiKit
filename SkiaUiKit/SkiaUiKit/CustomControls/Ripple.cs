@@ -44,6 +44,11 @@ namespace SkiaUiKit.CustomControls
                 IsAntialias = true,
             };
 
+            var innerRect = new SKRect(0, 0, _info.Width, _info.Height);
+            var baseRect = new SKRoundRect(innerRect, this.CornerRadius, this.CornerRadius);
+
+            canvas.ClipRoundRect(baseRect, antialias: true);
+
             canvas.DrawCircle(touchLocation, _currentRadius, paint);
         }
 
