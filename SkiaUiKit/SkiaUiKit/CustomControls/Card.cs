@@ -89,7 +89,8 @@ namespace SkiaUiKit.CustomControls
                 Color = this.BackgroundColor.ToSKColor(),
                 BlendMode = SKBlendMode.SrcOver,
                 IsAntialias = true,
-                ImageFilter = shadow
+                ImageFilter = shadow,
+                IsDither = true
             };
 
             canvas.DrawRoundRect(baseRect, bgPaint);

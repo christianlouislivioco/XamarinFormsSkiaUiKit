@@ -45,6 +45,7 @@ namespace SkiaUiKit.CustomControls
                 Color = rippleColor,
                 IsStroke = false,
                 IsAntialias = true,
+                IsDither = true
             };
 
             var innerRect = new SKRect(0, 0, _info.Width, _info.Height);
