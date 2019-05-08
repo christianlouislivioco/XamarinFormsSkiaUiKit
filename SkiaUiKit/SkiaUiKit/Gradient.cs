@@ -1,14 +1,14 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using SkiaUiKit.CustomControls;
 using SkiaUiKit.Enums;
 using Xamarin.Forms;
 
 namespace SkiaUiKit
 {
-    public class Gradient : ContentView
+    public class Gradient : Ripple
     {
-        public static readonly BindableProperty GradientProperty
-            = BindableProperty.Create(nameof(Enums.GradientType), typeof(GradientType), typeof(Gradient));
+        public static readonly BindableProperty GradientProperty = BindableProperty.Create(nameof(Enums.GradientType), typeof(GradientType), typeof(Gradient));
 
         public GradientType GradientStyle
         {
@@ -16,8 +16,7 @@ namespace SkiaUiKit
             set => SetValue(GradientProperty, value);
         }
 
-        public static readonly BindableProperty PrimaryColorProperty
-            = BindableProperty.Create(nameof(PrimaryColor), typeof(Color), typeof(Gradient), Color.WhiteSmoke);
+        public static readonly BindableProperty PrimaryColorProperty = BindableProperty.Create(nameof(PrimaryColor), typeof(Color), typeof(Gradient), Color.WhiteSmoke);
 
         public Color PrimaryColor
         {
@@ -25,8 +24,7 @@ namespace SkiaUiKit
             set => SetValue(PrimaryColorProperty, value);
         }
 
-        public static readonly BindableProperty SecondaryColorProperty
-            = BindableProperty.Create(nameof(SecondaryColor), typeof(Color), typeof(Gradient));
+        public static readonly BindableProperty SecondaryColorProperty = BindableProperty.Create(nameof(SecondaryColor), typeof(Color), typeof(Gradient));
 
         public Color SecondaryColor
         {

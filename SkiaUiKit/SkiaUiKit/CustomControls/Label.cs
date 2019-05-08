@@ -16,8 +16,7 @@ namespace SkiaUiKit.CustomControls
             Content = canvasView;
         }
 
-        public static readonly BindableProperty TextProperty
-            = BindableProperty.Create(nameof(Text), typeof(string), typeof(Label));
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(Label));
 
         public string Text
         {
@@ -25,8 +24,7 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(TextProperty, value);
         }
 
-        public static readonly BindableProperty IsFitToScaleProperty
-          = BindableProperty.Create(nameof(IsFitToScale), typeof(bool), typeof(Label), false);
+        public static readonly BindableProperty IsFitToScaleProperty = BindableProperty.Create(nameof(IsFitToScale), typeof(bool), typeof(Label), false);
 
         public bool IsFitToScale
         {
@@ -34,8 +32,7 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(IsFitToScaleProperty, value);
         }
 
-        public static readonly BindableProperty FontSizeProperty
-            = BindableProperty.Create(nameof(FontSize), typeof(float), typeof(Label), 14f);
+        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(float), typeof(Label), 14f);
 
         public float FontSize
         {
@@ -43,8 +40,7 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(FontSizeProperty, value);
         }
 
-        public static readonly BindableProperty HorizontalTextAlignmentProperty
-            = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(Label), TextAlignment.Start);
+        public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(Label), TextAlignment.Start);
 
         public TextAlignment HorizontalTextAlignment
         {
@@ -52,8 +48,7 @@ namespace SkiaUiKit.CustomControls
             set => SetValue(HorizontalTextAlignmentProperty, value);
         }
 
-        public static readonly BindableProperty VerticalTextAlignmentProperty
-          = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(Label), TextAlignment.Start);
+        public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(nameof(VerticalTextAlignment), typeof(TextAlignment), typeof(Label), TextAlignment.Start);
 
         public TextAlignment VerticalTextAlignment
         {
