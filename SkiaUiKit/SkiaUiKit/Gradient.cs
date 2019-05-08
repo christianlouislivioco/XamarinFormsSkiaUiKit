@@ -8,7 +8,7 @@ namespace SkiaUiKit
 {
     public class Gradient : Ripple
     {
-        public static readonly BindableProperty GradientStyleProperty 
+        public static readonly BindableProperty GradientStyleProperty
             = BindableProperty.Create(nameof(Enums.GradientType), typeof(GradientType), typeof(Gradient));
 
         public GradientType GradientStyle
@@ -17,7 +17,7 @@ namespace SkiaUiKit
             set => SetValue(GradientStyleProperty, value);
         }
 
-        public static new readonly BindableProperty BackgroundColorProperty 
+        public static new readonly BindableProperty BackgroundColorProperty
             = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Gradient), Color.WhiteSmoke);
 
         public new Color BackgroundColor
@@ -26,7 +26,7 @@ namespace SkiaUiKit
             set => SetValue(BackgroundColorProperty, value);
         }
 
-        public static readonly BindableProperty SecondaryColorProperty 
+        public static readonly BindableProperty SecondaryColorProperty
             = BindableProperty.Create(nameof(SecondaryColor), typeof(Color), typeof(Gradient));
 
         public Color SecondaryColor
@@ -39,15 +39,31 @@ namespace SkiaUiKit
             GradientType gradientType,
             SKRect rect)
         {
+            var colors = new SKColor[] { this.BackgroundColor.ToSKColor(), this.SecondaryColor.ToSKColor() };
+
             switch (gradientType)
             {
                 case GradientType.CornerToCorner:
                     return SKShader.CreateLinearGradient(
                                  new SKPoint(rect.Left, rect.Top),
                                  new SKPoint(rect.Right, rect.Bottom),
-                                 new SKColor[] { this.BackgroundColor.ToSKColor(), this.SecondaryColor.ToSKColor() },
+                                 colors,
                                  new float[] { 0, 1 },
                                  SKShaderTileMode.Repeat);
+                case GradientType.Vertical:
+                    return SKShader.CreateLinearGradient(
+                                 new SKPoint(0, 0),
+                                 new SKPoint(0, rect.Height),
+                                 colors,
+                                 null,
+                                 SKShaderTileMode.Clamp);
+                case GradientType.Horizontal:
+                    return SKShader.CreateLinearGradient(
+                                 new SKPoint(0, 0),
+                                 new SKPoint(rect.Width, 0),
+                                 colors,
+                                 null,
+                                 SKShaderTileMode.Clamp);
                 default:
                     return null;
             }

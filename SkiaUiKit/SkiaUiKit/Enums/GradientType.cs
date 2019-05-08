@@ -3,6 +3,8 @@
     public enum GradientType
     {
         None,
-        CornerToCorner
+        CornerToCorner,
+        Vertical,
+        Horizontal
     }
 }
