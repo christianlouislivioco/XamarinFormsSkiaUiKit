@@ -21,6 +21,7 @@ namespace SkiaUiKit.CustomControls
             _mainContent = new ContentView();
             _dropShadowView = new SKCanvasView();
             _dropShadowView.PaintSurface += CanvasView_PaintSurface;
+            _shadowColor = this.ShadowColor;
 
             HandleShadowArea();
             ReinitializeGrid();
@@ -85,7 +86,7 @@ namespace SkiaUiKit.CustomControls
             var info = e.Info;
             canvas.Clear();
 
-            var shadowColor = _shadowColor.MultiplyAlpha(0.6).ToSKColor();
+            var shadowColor = _shadowColor.MultiplyAlpha(102).ToSKColor();
 
             var shadow = SKImageFilter.CreateDropShadow(
                 0f,

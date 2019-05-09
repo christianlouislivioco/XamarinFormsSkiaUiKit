@@ -5,7 +5,7 @@ namespace SkiaUiKit
 {
     public class DropShadow : ContentView
     {
-        public static readonly BindableProperty ElevationProperty = BindableProperty.Create(nameof(Elevation), typeof(float), typeof(DropShadow), 4f);
+        public static readonly BindableProperty ElevationProperty = BindableProperty.Create(nameof(Elevation), typeof(float), typeof(DropShadow), 8f);
 
         public float Elevation
         {
