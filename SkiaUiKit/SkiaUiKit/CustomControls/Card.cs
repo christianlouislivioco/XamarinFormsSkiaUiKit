@@ -13,6 +13,8 @@ namespace SkiaUiKit.CustomControls
         private ContentView _mainContent;
         private float _shadowArea;
         private Ripple _ripple;
+        private float _elevation;
+        private Color _shadowColor;
 
         public Card()
         {
@@ -64,6 +66,10 @@ namespace SkiaUiKit.CustomControls
             {
                 ReinitializeGrid();
             }
+            if (propertyName == nameof(this.ShadowColor))
+            {
+                _shadowColor = this.ShadowColor;
+            }
             if (propertyName == nameof(this.CornerRadius))
             {
                 if (_ripple != null)
@@ -79,12 +85,14 @@ namespace SkiaUiKit.CustomControls
             var info = e.Info;
             canvas.Clear();
 
+            var shadowColor = _shadowColor.MultiplyAlpha(0.6).ToSKColor();
+
             var shadow = SKImageFilter.CreateDropShadow(
                 0f,
-                this.Elevation,
-                this.Elevation,
-                this.Elevation,
-                this.ShadowColor,
+                _elevation,
+                _elevation,
+                _elevation,
+                shadowColor,
                 SKDropShadowImageFilterShadowMode.DrawShadowAndForeground);
 
             var innerRect = new SKRect(_shadowArea, _shadowArea, info.Width - _shadowArea, info.Height - _shadowArea);
@@ -126,13 +134,15 @@ namespace SkiaUiKit.CustomControls
 
         private void HandleShadowArea()
         {
-            if (this.Elevation < 0)
+            _elevation = this.Elevation;
+
+            if (_elevation < 0)
             {
-                this.ShadowColor = SKColors.Transparent;
+                _shadowColor = Color.Transparent;
                 return;
             }
 
-            _shadowArea = this.Elevation + 8;
+            _shadowArea = _elevation * 3f;
             _dropShadowView.Margin = -_shadowArea;
         }
     }

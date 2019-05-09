@@ -23,11 +23,11 @@ namespace SkiaUiKit
         }
 
         public static readonly BindableProperty ShadowColorProperty
-            = BindableProperty.Create(nameof(ShadowColor), typeof(SKColor), typeof(DropShadow), new SKColor(0, 0, 0, 102));
+            = BindableProperty.Create(nameof(ShadowColor), typeof(Color), typeof(DropShadow), Color.Black);
 
-        public SKColor ShadowColor
+        public Color ShadowColor
         {
-            get => (SKColor)GetValue(ShadowColorProperty);
+            get => (Color)GetValue(ShadowColorProperty);
             set => SetValue(ShadowColorProperty, value);
         }
     }
