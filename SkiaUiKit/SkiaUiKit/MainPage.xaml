@@ -6,8 +6,7 @@
     <Grid Padding="20">
         <local:Card Padding="100" 
                     IsClickable="True"
-                    GradientStyle="Horizontal" 
-                    CornerRadius="125" HeightRequest="250" WidthRequest="250" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#780206" SecondaryColor="#061161" />
+                    CornerRadius="125" HeightRequest="250" WidthRequest="250" VerticalOptions="Center" HorizontalOptions="Center"  />
     </Grid>
 
 </ContentPage>
