@@ -12,6 +12,7 @@ namespace SkiaUiKit.CustomControls
         private Grid _grid;
         private ContentView _mainContent;
         private float _shadowArea;
+        private Ripple _ripple;
 
         public Card()
         {
@@ -63,6 +64,13 @@ namespace SkiaUiKit.CustomControls
             {
                 ReinitializeGrid();
             }
+            if (propertyName == nameof(this.CornerRadius))
+            {
+                if (_ripple != null)
+                {
+                    _ripple.CornerRadius = this.CornerRadius;
+                }
+            }
         }
 
         private void CanvasView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -103,7 +111,8 @@ namespace SkiaUiKit.CustomControls
 
             if (this.IsClickable)
             {
-                _grid.Children.Add(new Ripple());
+                _ripple = new Ripple();
+                _grid.Children.Add(_ripple);
             }
 
             if (_mainContent.Content != null)
