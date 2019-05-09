@@ -106,7 +106,6 @@ namespace SkiaUiKit.CustomControls
                 Color = this.BackgroundColor.ToSKColor(),
                 BlendMode = SKBlendMode.SrcOver,
                 IsAntialias = true,
-                MaskFilter = SKMaskFormat.Argb32,
                 ImageFilter = shadow,
                 IsDither = true
             };
