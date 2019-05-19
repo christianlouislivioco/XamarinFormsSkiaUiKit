@@ -4,9 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:SkiaUiKit.CustomControls">
 
     <Grid Padding="20">
-        <local:Card Padding="100" 
-                    IsClickable="True"
-                    CornerRadius="125" HeightRequest="250" WidthRequest="250" VerticalOptions="Center" HorizontalOptions="Center"  />
+        <local:Checkbox VerticalOptions="Center" HorizontalOptions="Center" />
     </Grid>
 
 </ContentPage>
